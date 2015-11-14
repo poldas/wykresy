@@ -1,0 +1,16 @@
+{
+  "name": "wykresy",
+  "version": "1.0.0",
+  "description": "Wykresy",
+  "main": "build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "riot -m -w tag/ build.js"
+  },
+  "author": "Daniel Polonis",
+  "license": "ISC",
+  "dependencies": {
+    "riot": "^2.3.1",
+    "riotcontrol": "0.0.1"
+  }
+}
