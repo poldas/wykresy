@@ -1,5 +1,5 @@
 <chart-view>
-   <chart each={ dana in dane } name={dana.name} danemapy={ dana.dane } komentarz = {dana.komentarz}></chart>
+   <chart each={ dane } dane={this}></chart>
    <style>
     chart {
     float: left
@@ -11,9 +11,8 @@
    loadDataFromServer();
    this.on("mount", function (){
         console.log("zamontowano chart-view");
-        loadGoogleMaps();
    })
-   
+   var self = this;
    function loadDataFromServer() {
         console.log("laduje dane");
          var jsonData = jQuery.ajax({
@@ -25,14 +24,5 @@
         console.log("zaladowalem dane", this.dane);
    }
    
-   function loadGoogleMaps() {
-        google.load('visualization', '1', {'packages': ['columnchart']});
-        google.setOnLoadCallback(googleLoaded);
-        console.log("google loader wykonany");
-    }
-   function googleLoaded() {
-       RiotControl.trigger("google-loaded", '1');
-       console.log("riot trigger google-loaded");
-   }
    </script>
 </chart-view>

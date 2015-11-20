@@ -5,7 +5,7 @@
   "main": "build.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "riot -m -w tag/ build.js"
+    "watch": "riot --ext html -m -w tag/ build.js"
   },
   "author": "Daniel Polonis",
   "license": "ISC",
