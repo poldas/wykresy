@@ -120,7 +120,7 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="map"></div> <chart-de
         self.dodajKomentarz = function(e) {
             console.log(this.opis.value);
             self.zapisujeText = "zapisuje...";
-            var mainUrl = ["http://localhost/analiza/php/ante/dodaj_komentarz.php?"];
+            var mainUrl = ["http://poldas.pl/analiza/php/ante/dodaj_komentarz.php?"];
             mainUrl.push("id_wykresu="+e.item.id_wykres);
             mainUrl.push("opis="+encodeURI(this.opis.value.trim()));
             console.log(mainUrl.join('&'));
