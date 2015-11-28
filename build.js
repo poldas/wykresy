@@ -95,7 +95,7 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="map"></div> <chart-de
                     crosshair: true
                 },
                 yAxis: {
-                    max: 1,
+                    max: opts.dane.opcje.max,
                     min: 0,
                     title: {
                         text: 'średnia'
