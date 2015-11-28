@@ -19,7 +19,7 @@ riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart { 
    function loadDataFromServer() {
         console.log("laduje dane");
          var jsonData = jQuery.ajax({
-            url: "http://localhost/analiza/php/ante/dane.php",
+            url: "http://poldas.pl/analiza/php/ante/dane.php",
             dataType: "json",
             async: false
         }).responseText;
