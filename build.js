@@ -19,7 +19,7 @@ riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart { 
    function loadDataFromServer() {
         console.log("laduje dane");
          var jsonData = jQuery.ajax({
-            url: "http://poldas.pl/analiza/php/ante/dane.php",
+            url: "http://localhost/analiza/php/ante/dane.php",
             dataType: "json",
             async: false
         }).responseText;
@@ -28,12 +28,12 @@ riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart { 
    }
 
 }, '{ }');
-riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="map"></div> <chart-description> <button name="dodaj" onblur="{zapiszBlur}" onclick="{dodajKomentarz}" type="button" class="btn btn-success btn-sm">Zapisz</button> <span>{this.zapisujeText}</span> <textarea name="opis" onkeyup="{this.resize}" class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea> </chart-description>', 'textarea { display: block; } chart { margin: 2px; padding: 5px; } a { cursor: pointer; } div.map { width: 520px; height: 340px; } div.opis { height: 150px; width: 440px; } .textarea { -moz-appearance: textfield-multiline; -webkit-appearance: textarea; border: 1px solid gray; font: medium -moz-fixed; font: -webkit-small-control; height: 28px; overflow: auto; padding: 2px; resize: both; width: 400px; }', '', function(opts) {
+riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_drukowac}"></div> <div class="{hide: this.czy_drukowac, nazwa: 1}">{opts.dane.nazwa}</div> <chart-description> <button show="{this.czy_drukowac}" name="dodaj" onblur="{zapiszBlur}" onclick="{dodajKomentarz}" class="btn btn-success btn-m"> <span class="glyphicon glyphicon-floppy-disk"></span> Zapisz </button> <input type="checkbox" name="czy_zapisac" data-toggle="toggle" data-on="Ukryj wykres" data-off="Dodaj do druku" __checked="{checked: !!this.czy_drukowac}"> <span>{this.zapisujeText}</span> <textarea show="{this.czy_drukowac}" name="opis" onkeyup="{this.resize}" class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea> <div class="print_helper">{opts.dane.komentarz}</div> </chart-description>', '.hide { display: none; } textarea { display: block; margin: 3px; } chart { margin: 2px; padding: 5px; } a { cursor: pointer; } div.map { width: 520px; height: 340px; } div.opis { height: 150px; width: 440px; }', '', function(opts) {
+        this.czy_drukowac = opts.dane.czy_wyswietlac;
         var self = this;
         var maxRow = 5;
         this.rows = maxRow;
         self.zapisujeText = "";
-        console.log('chart.tag');
         self.on('before-mount', function() {
             var str = this.opis.value;
             var cols = this.opis.cols;
@@ -65,13 +65,24 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="map"></div> <chart-de
             this.rows = (maxRow > linecount)? maxRow : linecount;
         }
         self.on('mount', function() {
-            console.log("chart.tag on mount");
             self.drawHighChart();
-            this.update();
+            jQuery(self.czy_zapisac).bootstrapToggle({});
+            jQuery(self.czy_zapisac).change(function(e) {
+                self.czy_drukowac =  $(this).prop('checked');
+                var opis = encodeURI(self.opis.value.trim());
+                self.zapisz(opts.dane.id_wykres, opis, self.czy_drukowac);
+                self.update();
+            });
+            function copy_to_print_helper(){
+                jQuery('div.print_helper').text(jQuery(self.opis).val());
+              }
+              jQuery(self.opis).bind('keydown keyup keypress cut copy past blur change', function(){
+                copy_to_print_helper();
+              });
+              copy_to_print_helper();
         })
 
         self.drawHighChart = function() {
-            console.log("rysuje wykres", opts.dane.id_wykres,  jQuery('#'+opts.dane.id_wykres));
             jQuery('#'+opts.dane.id_wykres).highcharts({
                 chart: {
                     type: 'column',
@@ -116,13 +127,12 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="map"></div> <chart-de
             });
             self.update();
         }
-
-        self.dodajKomentarz = function(e) {
-            console.log(this.opis.value);
+        self.zapisz = function(id_wykres, opis, czy_wyswietlac) {
             self.zapisujeText = "zapisuje...";
-            var mainUrl = ["http://poldas.pl/analiza/php/ante/dodaj_komentarz.php?"];
-            mainUrl.push("id_wykresu="+e.item.id_wykres);
-            mainUrl.push("opis="+encodeURI(this.opis.value.trim()));
+            var mainUrl = ["http://localhost/analiza/php/ante/dodaj_komentarz.php?"];
+            mainUrl.push("id_wykresu=" + id_wykres);
+            mainUrl.push("opis=" + opis);
+            mainUrl.push("czy_wyswietlac=" + czy_wyswietlac);
             console.log(mainUrl.join('&'));
             jQuery.ajax({
                 url: mainUrl.join('&'),
@@ -131,5 +141,13 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="map"></div> <chart-de
                 self.zapisujeText = "";
                 self.update();
             });
+        }
+        self.dodajKomentarz = function(e) {
+            var id_wykres = e.item.id_wykres;
+            var opis = encodeURI(this.opis.value.trim());
+            var czy_wyswietlac = !!this.czy_zapisac.checked;
+
+            self.zapisz(id_wykres, opis, czy_wyswietlac);
+            this.update();
         }
 }, '{ }');});
