@@ -75,7 +75,6 @@ riot.tag2('chart', '<div name="calaMapa"> <div id="{opts.dane.id_wykres}" name="
             });
 
             jQuery(self.powieksz).click(function() {
-                console.log(jQuery(self.wykresArea));
                 jQuery(self.myModal).html(jQuery(self.calaMapa).html());
             });
 
