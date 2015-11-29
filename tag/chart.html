@@ -13,17 +13,22 @@
              checked={checked: !!this.czy_drukowac}>
          <span>{this.zapisujeText}</span>
         <textarea show={this.czy_drukowac} name="opis" onkeyup={this.resize} class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea>
-        <div show={this.czy_drukowac} class="print_helper">{opts.dane.komentarz}</div>
+        <div show={this.czy_drukowac} name="printhelper" class="print_helper">{opts.dane.komentarz}</div>
     </chart-description>
     <style>
+    div.off {
+        top: 17px;
+        left: 15px;
+    }
         chart {
             width: 48%;
             margin: 3px;
             min-height: 100px;
             padding: 10px;
+            overfow: hidden;
             float: left;
         }
-        chart:hover {
+        charta:hover {
             -webkit-box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
             -moz-box-shadow:    -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
             box-shadow:         -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
@@ -48,11 +53,17 @@
             width: 500px;
         }
         
+        chart-description, div.nazwa {
+            float:left;
+        }
         @media print {
             chart {
                 margin: 20px auto;
                 float: none;
             }
+            chart-description, div.nazwa {
+            float: none;
+        }
         }
     </style>
 
@@ -103,7 +114,7 @@
                 self.update();
             });
               function copy_to_print_helper(){
-                jQuery('div.print_helper').text(jQuery(self.opis).val());
+                jQuery(self.printhelper).text(jQuery(self.opis).val());
               }
               jQuery(self.opis).bind('keydown keyup keypress cut copy past blur change', function(){
                 copy_to_print_helper();
@@ -157,7 +168,7 @@
         }
         self.zapisz = function(id_wykres, opis, czy_wyswietlac) {
             self.zapisujeText = "zapisuje...";
-            var mainUrl = ["http://poldas.pl/analiza/php/ante/dodaj_komentarz.php?"];
+            var mainUrl = ["http://" + window.location.hostname + "/analiza/php/ante/dodaj_komentarz.php?"];
             mainUrl.push("id_wykresu=" + id_wykres);
             mainUrl.push("opis=" + opis);
             mainUrl.push("czy_wyswietlac=" + czy_wyswietlac);

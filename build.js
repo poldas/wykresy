@@ -19,7 +19,7 @@ riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart-vi
    function loadDataFromServer() {
         console.log("laduje dane");
          var jsonData = jQuery.ajax({
-            url: "http://poldas.pl/analiza/php/ante/dane.php",
+            url: "http://" + window.location.hostname + "/analiza/php/ante/dane.php",
             dataType: "json",
             async: false
         }).responseText;
@@ -28,7 +28,7 @@ riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart-vi
    }
 
 }, '{ }');
-riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_drukowac, map:1}"></div> <div class="{hide: this.czy_drukowac, nazwa: 1}"><h2>{opts.dane.nazwa}</h2></div> <chart-description> <button show="{this.czy_drukowac}" name="dodaj" onblur="{zapiszBlur}" onclick="{dodajKomentarz}" class="btn btn-success btn-m"> <span class="glyphicon glyphicon-floppy-disk"></span> Zapisz </button> <input type="checkbox" name="czy_zapisac" data-toggle="toggle" data-on="Ukryj wykres" data-off="Dodaj do druku" __checked="{checked: !!this.czy_drukowac}"> <span>{this.zapisujeText}</span> <textarea show="{this.czy_drukowac}" name="opis" onkeyup="{this.resize}" class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea> <div show="{this.czy_drukowac}" class="print_helper">{opts.dane.komentarz}</div> </chart-description>', 'chart { width: 48%; margin: 3px; min-height: 100px; padding: 10px; float: left; } chart:hover { -webkit-box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62); -moz-box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62); box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62); } .hide { visible: hidden; display:none; } textarea { display: block; margin: 3px; } a { cursor: pointer; } div.map { width: 520px; height: 340px; } div.opis { height: 150px; width: 500px; } @media print { chart { margin: 20px auto; float: none; } }', '', function(opts) {
+riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_drukowac, map:1}"></div> <div class="{hide: this.czy_drukowac, nazwa: 1}"><h2>{opts.dane.nazwa}</h2></div> <chart-description> <button show="{this.czy_drukowac}" name="dodaj" onblur="{zapiszBlur}" onclick="{dodajKomentarz}" class="btn btn-success btn-m"> <span class="glyphicon glyphicon-floppy-disk"></span> Zapisz </button> <input type="checkbox" name="czy_zapisac" data-toggle="toggle" data-on="Ukryj wykres" data-off="Dodaj do druku" __checked="{checked: !!this.czy_drukowac}"> <span>{this.zapisujeText}</span> <textarea show="{this.czy_drukowac}" name="opis" onkeyup="{this.resize}" class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea> <div show="{this.czy_drukowac}" name="printhelper" class="print_helper">{opts.dane.komentarz}</div> </chart-description>', 'div.off { top: 17px; left: 15px; } chart { width: 48%; margin: 3px; min-height: 100px; padding: 10px; overfow: hidden; float: left; } charta:hover { -webkit-box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62); -moz-box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62); box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62); } .hide { visible: hidden; display:none; } textarea { display: block; margin: 3px; } a { cursor: pointer; } div.map { width: 520px; height: 340px; } div.opis { height: 150px; width: 500px; } chart-description, div.nazwa { float:left; } @media print { chart { margin: 20px auto; float: none; } chart-description, div.nazwa { float: none; } }', '', function(opts) {
         this.czy_drukowac = opts.dane.czy_wyswietlac;
         var self = this;
         var maxRow = 5;
@@ -74,7 +74,7 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_druk
                 self.update();
             });
               function copy_to_print_helper(){
-                jQuery('div.print_helper').text(jQuery(self.opis).val());
+                jQuery(self.printhelper).text(jQuery(self.opis).val());
               }
               jQuery(self.opis).bind('keydown keyup keypress cut copy past blur change', function(){
                 copy_to_print_helper();
@@ -128,7 +128,7 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_druk
         }
         self.zapisz = function(id_wykres, opis, czy_wyswietlac) {
             self.zapisujeText = "zapisuje...";
-            var mainUrl = ["http://poldas.pl/analiza/php/ante/dodaj_komentarz.php?"];
+            var mainUrl = ["http://" + window.location.hostname + "/analiza/php/ante/dodaj_komentarz.php?"];
             mainUrl.push("id_wykresu=" + id_wykres);
             mainUrl.push("opis=" + opis);
             mainUrl.push("czy_wyswietlac=" + czy_wyswietlac);
