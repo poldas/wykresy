@@ -1,6 +1,6 @@
 <chart>
     <div id={opts.dane.id_wykres} class="{hide: !this.czy_drukowac, map:1}"></div>
-    <div class={hide: this.czy_drukowac, nazwa: 1}>{opts.dane.nazwa}</div>
+    <div class={hide: this.czy_drukowac, nazwa: 1}><h2>{opts.dane.nazwa}</h2></div>
     <chart-description>
         <button show={this.czy_drukowac} name="dodaj" onblur={zapiszBlur} onclick={dodajKomentarz} 
             class="btn btn-success btn-m">
@@ -17,12 +17,17 @@
     </chart-description>
     <style>
         chart {
-            width: 45%;
-            margin: 5px;
+            width: 48%;
+            margin: 3px;
             min-height: 100px;
-            padding: 5px;
+            padding: 10px;
             float: left;
-        }   
+        }
+        chart:hover {
+            -webkit-box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
+            -moz-box-shadow:    -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
+            box-shadow:         -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
+        }
         .hide {
             visible: hidden;
             display:none;
@@ -152,7 +157,7 @@
         }
         self.zapisz = function(id_wykres, opis, czy_wyswietlac) {
             self.zapisujeText = "zapisuje...";
-            var mainUrl = ["http://poldas.pl/analiza/php/ante/dodaj_komentarz.php?"];
+            var mainUrl = ["http://localhost/analiza/php/ante/dodaj_komentarz.php?"];
             mainUrl.push("id_wykresu=" + id_wykres);
             mainUrl.push("opis=" + opis);
             mainUrl.push("czy_wyswietlac=" + czy_wyswietlac);
