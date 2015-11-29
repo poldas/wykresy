@@ -1,5 +1,5 @@
 <chart>
-    <div id={opts.dane.id_wykres} class="{hide: !this.czy_drukowac}"></div>
+    <div id={opts.dane.id_wykres} class="{hide: !this.czy_drukowac, map:1}"></div>
     <div class={hide: this.czy_drukowac, nazwa: 1}>{opts.dane.nazwa}</div>
     <chart-description>
         <button show={this.czy_drukowac} name="dodaj" onblur={zapiszBlur} onclick={dodajKomentarz} 
@@ -16,16 +16,20 @@
         <div show={this.czy_drukowac} class="print_helper">{opts.dane.komentarz}</div>
     </chart-description>
     <style>
+        chart {
+            width: 45%;
+            margin: 5px;
+            min-height: 100px;
+            padding: 5px;
+            float: left;
+        }   
         .hide {
-            display: none;
+            visible: hidden;
+            display:none;
         }
         textarea {
             display: block;
             margin: 3px;
-        }
-        chart {
-            margin: 2px;
-            padding: 5px;
         }
         a {
             cursor: pointer;
@@ -36,7 +40,14 @@
         }
         div.opis {
             height: 150px;
-            width: 440px;
+            width: 500px;
+        }
+        
+        @media print {
+            chart {
+                margin: 20px auto;
+                float: none;
+            }
         }
     </style>
 
@@ -86,7 +97,7 @@
                 self.zapisz(opts.dane.id_wykres, opis, self.czy_drukowac);
                 self.update();
             });
-            function copy_to_print_helper(){
+              function copy_to_print_helper(){
                 jQuery('div.print_helper').text(jQuery(self.opis).val());
               }
               jQuery(self.opis).bind('keydown keyup keypress cut copy past blur change', function(){

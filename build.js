@@ -8,7 +8,7 @@
     tagger(window.riot)
   }
 })(function(riot, require, exports, module) {
-riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart { float: left }', '', function(opts) {
+riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart-view { overflow: hidden; }', '', function(opts) {
    RiotControl.addStore(this);
    console.log("chart-view.tag");
    loadDataFromServer();
@@ -28,7 +28,7 @@ riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart { 
    }
 
 }, '{ }');
-riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_drukowac}"></div> <div class="{hide: this.czy_drukowac, nazwa: 1}">{opts.dane.nazwa}</div> <chart-description> <button show="{this.czy_drukowac}" name="dodaj" onblur="{zapiszBlur}" onclick="{dodajKomentarz}" class="btn btn-success btn-m"> <span class="glyphicon glyphicon-floppy-disk"></span> Zapisz </button> <input type="checkbox" name="czy_zapisac" data-toggle="toggle" data-on="Ukryj wykres" data-off="Dodaj do druku" __checked="{checked: !!this.czy_drukowac}"> <span>{this.zapisujeText}</span> <textarea show="{this.czy_drukowac}" name="opis" onkeyup="{this.resize}" class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea> <div show="{this.czy_drukowac}" class="print_helper">{opts.dane.komentarz}</div> </chart-description>', '.hide { display: none; } textarea { display: block; margin: 3px; } chart { margin: 2px; padding: 5px; } a { cursor: pointer; } div.map { width: 520px; height: 340px; } div.opis { height: 150px; width: 440px; }', '', function(opts) {
+riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_drukowac, map:1}"></div> <div class="{hide: this.czy_drukowac, nazwa: 1}">{opts.dane.nazwa}</div> <chart-description> <button show="{this.czy_drukowac}" name="dodaj" onblur="{zapiszBlur}" onclick="{dodajKomentarz}" class="btn btn-success btn-m"> <span class="glyphicon glyphicon-floppy-disk"></span> Zapisz </button> <input type="checkbox" name="czy_zapisac" data-toggle="toggle" data-on="Ukryj wykres" data-off="Dodaj do druku" __checked="{checked: !!this.czy_drukowac}"> <span>{this.zapisujeText}</span> <textarea show="{this.czy_drukowac}" name="opis" onkeyup="{this.resize}" class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea> <div show="{this.czy_drukowac}" class="print_helper">{opts.dane.komentarz}</div> </chart-description>', 'chart { width: 45%; margin: 5px; min-height: 100px; padding: 5px; float: left; } .hide { visible: hidden; display:none; } textarea { display: block; margin: 3px; } a { cursor: pointer; } div.map { width: 520px; height: 340px; } div.opis { height: 150px; width: 500px; } @media print { chart { margin: 20px auto; float: none; } }', '', function(opts) {
         this.czy_drukowac = opts.dane.czy_wyswietlac;
         var self = this;
         var maxRow = 5;
@@ -73,7 +73,7 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_druk
                 self.zapisz(opts.dane.id_wykres, opis, self.czy_drukowac);
                 self.update();
             });
-            function copy_to_print_helper(){
+              function copy_to_print_helper(){
                 jQuery('div.print_helper').text(jQuery(self.opis).val());
               }
               jQuery(self.opis).bind('keydown keyup keypress cut copy past blur change', function(){
