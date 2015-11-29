@@ -99,7 +99,7 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_druk
                 },
                 xAxis: {
                     title: {
-                        text: 'Umiejętności'
+                        text: opts.dane.rodzaj_wykresu
                     },
                     categories: opts.dane.categories,
                     crosshair: true
@@ -108,7 +108,7 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_druk
                     max: opts.dane.opcje.max,
                     min: 0,
                     title: {
-                        text: 'średnia'
+                        text: opts.dane.opisY
                     }
                 },
                 plotOptions: {
