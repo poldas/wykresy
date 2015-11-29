@@ -28,7 +28,7 @@ riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart { 
    }
 
 }, '{ }');
-riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_drukowac}"></div> <div class="{hide: this.czy_drukowac, nazwa: 1}">{opts.dane.nazwa}</div> <chart-description> <button show="{this.czy_drukowac}" name="dodaj" onblur="{zapiszBlur}" onclick="{dodajKomentarz}" class="btn btn-success btn-m"> <span class="glyphicon glyphicon-floppy-disk"></span> Zapisz </button> <input type="checkbox" name="czy_zapisac" data-toggle="toggle" data-on="Ukryj wykres" data-off="Dodaj do druku" __checked="{checked: !!this.czy_drukowac}"> <span>{this.zapisujeText}</span> <textarea show="{this.czy_drukowac}" name="opis" onkeyup="{this.resize}" class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea> <div class="print_helper">{opts.dane.komentarz}</div> </chart-description>', '.hide { display: none; } textarea { display: block; margin: 3px; } chart { margin: 2px; padding: 5px; } a { cursor: pointer; } div.map { width: 520px; height: 340px; } div.opis { height: 150px; width: 440px; }', '', function(opts) {
+riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_drukowac}"></div> <div class="{hide: this.czy_drukowac, nazwa: 1}">{opts.dane.nazwa}</div> <chart-description> <button show="{this.czy_drukowac}" name="dodaj" onblur="{zapiszBlur}" onclick="{dodajKomentarz}" class="btn btn-success btn-m"> <span class="glyphicon glyphicon-floppy-disk"></span> Zapisz </button> <input type="checkbox" name="czy_zapisac" data-toggle="toggle" data-on="Ukryj wykres" data-off="Dodaj do druku" __checked="{checked: !!this.czy_drukowac}"> <span>{this.zapisujeText}</span> <textarea show="{this.czy_drukowac}" name="opis" onkeyup="{this.resize}" class="opis" cols="55" rows="{this.rows}">{opts.dane.komentarz}</textarea> <div show="{this.czy_drukowac}" class="print_helper">{opts.dane.komentarz}</div> </chart-description>', '.hide { display: none; } textarea { display: block; margin: 3px; } chart { margin: 2px; padding: 5px; } a { cursor: pointer; } div.map { width: 520px; height: 340px; } div.opis { height: 150px; width: 440px; }', '', function(opts) {
         this.czy_drukowac = opts.dane.czy_wyswietlac;
         var self = this;
         var maxRow = 5;
@@ -79,7 +79,6 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_druk
               jQuery(self.opis).bind('keydown keyup keypress cut copy past blur change', function(){
                 copy_to_print_helper();
               });
-              copy_to_print_helper();
         })
 
         self.drawHighChart = function() {
