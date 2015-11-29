@@ -19,7 +19,7 @@ riot.tag2('chart-view', '<chart each="{dane}" dane="{this}"></chart>', 'chart-vi
    function loadDataFromServer() {
         console.log("laduje dane");
          var jsonData = jQuery.ajax({
-            url: "http://localhost/analiza/php/ante/dane.php",
+            url: "http://poldas.pl/analiza/php/ante/dane.php",
             dataType: "json",
             async: false
         }).responseText;
@@ -128,7 +128,7 @@ riot.tag2('chart', '<div id="{opts.dane.id_wykres}" class="{hide: !this.czy_druk
         }
         self.zapisz = function(id_wykres, opis, czy_wyswietlac) {
             self.zapisujeText = "zapisuje...";
-            var mainUrl = ["http://localhost/analiza/php/ante/dodaj_komentarz.php?"];
+            var mainUrl = ["http://poldas.pl/analiza/php/ante/dodaj_komentarz.php?"];
             mainUrl.push("id_wykresu=" + id_wykres);
             mainUrl.push("opis=" + opis);
             mainUrl.push("czy_wyswietlac=" + czy_wyswietlac);
