@@ -1,100 +1,109 @@
-<chart>
-  <div name="calaMapa">
-    <div id={opts.dane.id_wykres} name="wykresArea" class="{hide: !this.czy_drukowac, map:1}"></div>
-  </div>
+<chart class="{schowaj: !this.czy_drukowac}">
+    <div name="calaMapa">
+        <div id={opts.dane.id_wykres} name="wykresArea" class="{hide: !this.czy_drukowac, map:1}"></div>
+    </div>
     <div class={hide: this.czy_drukowac, nazwa: 1}><h2>{opts.dane.nazwa}</h2></div>
     <chart-description>
-        <button show={this.czy_drukowac} name="dodaj" onblur={zapiszBlur} onclick={dodajKomentarz} 
-            class="btn btn-success btn-m">
+        <button show={this.czy_drukowac} name="dodaj" onblur={zapiszBlur} onclick={dodajKomentarz}
+                class="btn btn-success btn-m">
             <span class="glyphicon glyphicon-floppy-disk"></span> Zapisz
         </button>
         <input type="checkbox" name="czy_zapisac"
-             data-toggle="toggle" 
-             data-on="Ukryj wykres"
-             data-off="Dodaj do druku"
-             checked={checked: !!this.czy_drukowac}>
-             
-         <button show={this.czy_drukowac} type="button" class="btn btn-info btn-m" name="powieksz" data-toggle="modal" 
-         		data-target="#myModal{opts.dane.id_wykres}">
+               data-toggle="toggle"
+               data-on="Ukryj wykres"
+               data-off="Dodaj do druku"
+               checked={checked: !!this.czy_drukowac}>
+
+        <button show={this.czy_drukowac} type="button" class="btn btn-info btn-m" name="powieksz" data-toggle="modal"
+                data-target="#myModal{opts.dane.id_wykres}">
             Powiększ
-         </button>
-         
-         <span>{this.zapisujeText}</span>
-        <textarea show={this.czy_drukowac} name="opis" onkeyup={this.resize} class="opis" cols="55" rows="{this.rows}">
+        </button>
+
+        <span>{this.zapisujeText}</span>
+        <textarea show={this.czy_drukowac} name="opis" class="opis" cols="55" rows="{this.rows}">
         	{opts.dane.komentarz}
        	</textarea>
         <div show={this.czy_drukowac} name="printhelper" class="print_helper">{opts.dane.komentarz}</div>
     </chart-description>
     <!-- Modal -->
-  <div class="modal fade" id="myModal{opts.dane.id_wykres}" role="dialog">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"></h4>
+    <div class="modal fade" id="myModal{opts.dane.id_wykres}" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body" name="myModal">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body" name="myModal">
-         
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-        </div>
-      </div>
     </div>
-  </div>
     <style>
-    div.off {
-        top: 17px;
-        left: 15px;
-    }
-    .modal-block div.map {
-        width: 600px;
-    }
+        div.off {
+            top: 17px;
+            left: 15px;
+        }
+
+        .modal-block div.map {
+            width: 600px;
+        }
+
         chart {
             width: 48%;
             margin: 3px;
             min-height: 100px;
             padding: 10px;
-            overfow: hidden;
+            overflow: hidden;
             float: left;
-            border-botton: 1px solid black;
         }
+
         charta:hover {
             -webkit-box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
-            -moz-box-shadow:    -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
-            box-shadow:         -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
+            -moz-box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
+            box-shadow: -3px 5px 13px 0px rgba(50, 50, 50, 0.62);
         }
+
         .hide {
             visible: hidden;
-            display:none;
+            display: none;
         }
+
         textarea {
             display: block;
             margin: 3px;
         }
+
         a {
             cursor: pointer;
         }
+
         div.map {
             width: 520px;
             height: 340px;
         }
+
         div.opis {
             height: 150px;
             width: 500px;
         }
-        
+
         chart-description, div.nazwa {
-            float:left;
+            float: left;
         }
+
         @media print {
             chart {
                 margin: 20px auto;
                 float: none;
             }
+
             chart-description, div.nazwa {
-            float: none;
-        }
+                float: none;
+            }
         }
     </style>
 
@@ -104,61 +113,61 @@
         var maxRow = 5;
         this.rows = maxRow;
         self.zapisujeText = "";
-        self.on('before-mount', function() {
+        self.on('before-mount', function () {
             var str = this.opis.value;
             var cols = this.opis.cols;
             var linecount = 0;
             var len = 0;
-            jQuery.each(str.split("\n"),function(index, l) {
-                len =  Math.ceil( l.length / cols );
+            jQuery.each(str.split("\n"), function (index, l) {
+                len = Math.ceil(l.length / cols);
                 if (!len) {
                     len = 1;
                 }
-              linecount += len; // take into account long linesspan>
-            } );
+                linecount += len; // take into account long linesspan>
+            });
             this.rows = Math.max(maxRow, linecount);
             this.update();
         });
-        
-          
-        self.resize = function() {
+
+
+        self.resize = function () {
             var str = this.opis.value;
             var cols = this.opis.cols;
             var linecount = 0;
             var len = 0;
-            jQuery.each(str.split("\n"),function(index, l) {
-                len =  Math.ceil( l.length / cols );
+            jQuery.each(str.split("\n"), function (index, l) {
+                len = Math.ceil(l.length / cols);
                 if (!len) {
                     len = 1;
                 }
-              linecount += len; // take into account long lines
-            } );
-            this.rows = (maxRow > linecount)? maxRow : linecount;
+                linecount += len; // take into account long lines
+            });
+            this.rows = (maxRow > linecount) ? maxRow : linecount;
         }
-        self.on('mount', function() {
+        self.on('mount', function () {
             self.drawHighChart();
             jQuery(self.czy_zapisac).bootstrapToggle({});
-            jQuery(self.czy_zapisac).change(function(e) {
-                self.czy_drukowac =  $(this).prop('checked');
+            jQuery(self.czy_zapisac).change(function (e) {
+                self.czy_drukowac = $(this).prop('checked');
                 var opis = encodeURI(self.opis.value);
                 self.zapisz(opts.dane.id_wykres, opis, self.czy_drukowac);
-                self.update();
             });
-            
-            jQuery(self.powieksz).click(function() {
+
+            jQuery(self.powieksz).click(function () {
                 jQuery(self.myModal).html(jQuery(self.calaMapa).html());
             });
-            
-              function copy_to_print_helper(){
+
+            function copy_to_print_helper() {
                 jQuery(self.printhelper).text(jQuery(self.opis).val());
-              }
-              jQuery(self.opis).bind('keydown keyup keypress cut copy past blur change', function(){
+            }
+
+            jQuery(self.opis).bind('keydown keyup keypress cut copy past blur change', function () {
                 copy_to_print_helper();
-              });
+            });
         })
-        
-        self.drawHighChart = function() {
-            jQuery('#'+opts.dane.id_wykres).highcharts({
+
+        self.drawHighChart = function () {
+            jQuery('#' + opts.dane.id_wykres).highcharts({
                 chart: {
                     type: 'column',
                     margin: 75,
@@ -171,7 +180,7 @@
                     }
                 },
                 title: {
-                        text: opts.dane.nazwa
+                    text: opts.dane.nazwa
                 },
                 xAxis: {
                     title: {
@@ -202,7 +211,7 @@
             });
             self.update();
         }
-        self.zapisz = function(id_wykres, opis, czy_wyswietlac) {
+        self.zapisz = function (id_wykres, opis, czy_wyswietlac) {
             self.zapisujeText = "zapisuje...";
             var mainUrl = ["http://" + window.location.hostname + "/analiza/php/ante/dodaj_komentarz.php?"];
             mainUrl.push("id_wykresu=" + id_wykres);
@@ -212,18 +221,17 @@
             jQuery.ajax({
                 url: mainUrl.join('&'),
                 type: "get"
-            }).success(function(response){
+            }).success(function (response) {
                 self.zapisujeText = "";
                 self.update();
             });
         }
-        self.dodajKomentarz = function(e) {
+        self.dodajKomentarz = function (e) {
             var id_wykres = e.item.id_wykres;
             var opis = encodeURI(this.opis.value.trim());
             var czy_wyswietlac = !!this.czy_zapisac.checked;
-            
+
             self.zapisz(id_wykres, opis, czy_wyswietlac);
-            this.update();
         }
     </script>
 </chart>
