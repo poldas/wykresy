@@ -1,5 +1,4 @@
 .buildpath
-node_modules/*
 .project
 .idea
 .settings/
