@@ -104,7 +104,7 @@ riot.tag2('chart', '<div name="calaMapa"> <div id="{opts.dane.id_wykres}" name="
                 },
                 xAxis: {
                     title: {
-                        text: opts.dane.rodzaj_wykresu
+                        text: ''
                     },
                     categories: opts.dane.categories,
                     crosshair: true
@@ -153,4 +153,5 @@ riot.tag2('chart', '<div name="calaMapa"> <div id="{opts.dane.id_wykres}" name="
 
             self.zapisz(id_wykres, opis, czy_wyswietlac);
         }
-}, '{ }');});
+}, '{ }');
+});
